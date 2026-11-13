@@ -1,0 +1,9 @@
+services:
+  fashion-mnist:
+    build: .
+    container_name: fashion-mnist
+    restart: always
+    environment:
+      - TZ=Asia/Jakarta
+    ports:
+      - "127.0.0.1:5002:8000"  # local only; expose via the Cloudflare tunnel

@@ -9,6 +9,8 @@ from pathlib import Path
 
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel
 
@@ -21,6 +23,15 @@ app = FastAPI(
     description="Klasifikasi 10 kelas pakaian dengan CNN (ONNX Runtime, CPU).",
     version="1.0.0",
 )
+
+STATIC_DIR = Path(__file__).resolve().parent / "static"
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+
+@app.get("/", include_in_schema=False)
+def index() -> FileResponse:
+    return FileResponse(STATIC_DIR / "index.html")
+
 
 classifier = FashionMNISTClassifier(
     ASSETS_DIR / "model.onnx", ASSETS_DIR / "class_names.json"

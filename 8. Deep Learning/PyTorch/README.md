@@ -25,6 +25,8 @@ PyTorch/
 Kedua notebook sudah dijalankan penuh dan menyimpan output. Notebook mengunduh dataset sendiri
 jika `data/*.csv` belum ada, dan notebook 2 menulis ulang seluruh isi `assets/`.
 
+Demo: https://fashion.alfiwillianz.my.id
+
 ## Menjalankan API
 
 Model yang dipakai adalah **CNN + BatchNorm + Dropout** (accuracy 0,9185 pada test set) dalam
@@ -76,7 +78,7 @@ curl -X POST -F "file=@gambar.png" http://localhost:8000/predict
 
 ### Preprocessing yang diterapkan API
 
-1. Gambar dikonversi ke grayscale (`convert("L")`), lalu di-resize ke 28×28.
+1. Gambar dikonversi ke grayscale; latar terang otomatis di-invert (Fashion-MNIST berlatar hitam), objek di-crop dan di-pad persegi, lalu di-resize ke 28×28.
 2. Nilai piksel 0-255 dibagi 255 menjadi rentang 0-1, tipe `float32`.
 3. Bentuk input menjadi `(1, 1, 28, 28)`.
 4. Output model berupa 10 logit, lalu diubah dengan softmax menjadi probabilitas.
